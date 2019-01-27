@@ -2,18 +2,18 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:17:47 
  * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 09:22:36
+ * @Last Modified time: 2019-01-27 11:22:39
  */
 <!-- 购物车 -->
 <template>
-    <div class='cart'>
+    <div class="cart">
         购物车
     </div>
 </template>
 
 <script>
 export default {
-    name: 'cart',
+    name: 'Cart',
     components: {},
     props: {},
     data() {

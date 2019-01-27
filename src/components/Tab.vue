@@ -1,19 +1,19 @@
 /*
  * @Author: Shen Xianhui 
- * @Date: 2019-01-27 09:17:34 
+ * @Date: 2019-01-27 11:21:41 
  * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 10:08:58
+ * @Last Modified time: 2019-01-27 11:22:03
  */
-<!-- 首页 -->
+<!-- 顶部标签栏 -->
 <template>
-    <div class="home">
-        首页
+    <div class="Tab">
+        New page
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Home',
+    name: 'Tab',
     components: {},
     props: {},
     data() {
