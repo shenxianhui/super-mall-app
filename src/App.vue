@@ -6,7 +6,19 @@
 
 <script>
 export default {
-  	name: 'App'
+	name: 'App',
+	created() {
+		this.resize();
+	},
+	methods: {
+		resize() {
+            $(window).resize(() => {
+                let w = $(window).width();
+                $('html').css({fontSize: w / 375 * 100 + 'px'});
+                $('body').css({fontSize: '0.12rem'});
+            });
+        }
+	}
 }
 </script>
 

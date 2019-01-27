@@ -2,13 +2,13 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 11:16:28 
  * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 11:24:46
+ * @Last Modified time: 2019-01-27 17:35:42
  */
 <!-- Home 主页 -->
 <template>
     <div class="main-home">
-        <router-view></router-view>
         <Tab></Tab>
+        <!-- <router-view></router-view> -->
     </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style scoped lang='less'>
-.main {
+.main-home {
     width: 100%;
     height: 100%;
 }

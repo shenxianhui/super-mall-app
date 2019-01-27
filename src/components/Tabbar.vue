@@ -2,7 +2,7 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:44:11 
  * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 11:22:12
+ * @Last Modified time: 2019-01-27 19:05:22
  */
 <!-- 底部标签栏 -->
 <template>
@@ -21,7 +21,7 @@
             <van-tabbar-item icon="contact">
                 <router-link to="/account">我的</router-link>
             </van-tabbar-item> -->
-            <van-tabbar-item icon="home-o" to="/home">首页</van-tabbar-item>
+            <van-tabbar-item icon="home-o" to="/home/home-hot">首页</van-tabbar-item>
             <van-tabbar-item icon="apps-o" to="/categories">分类</van-tabbar-item>
             <van-tabbar-item icon="cart-o" to="/cart">购物车</van-tabbar-item>
             <van-tabbar-item icon="contact" to="/account">我的</van-tabbar-item>

@@ -9,7 +9,10 @@ const Blank = resolve => require.ensure([], () => resolve(require('@/views/Blank
 
 /* 首页 */
 const MainHome = resolve => require.ensure([], () => resolve(require('@/views/home/MainHome')), 'MainHome');
-const Home = resolve => require.ensure([], () => resolve(require('@/views/home/Home')), 'Home');
+const HomeHot = resolve => require.ensure([], () => resolve(require('@/views/home/HomeHot')), 'HomeHot');
+const HomeNew = resolve => require.ensure([], () => resolve(require('@/views/home/HomeNew')), 'HomeNew');
+const HomePreferential = resolve => require.ensure([], () => resolve(require('@/views/home/HomePreferential')), 'HomePreferential');
+const HomeMore = resolve => require.ensure([], () => resolve(require('@/views/home/HomeMore')), 'HomeMore');
 
 /* 分类 */
 const Categories = resolve => require.ensure([], () => resolve(require('@/views/categories/Categories')), 'Categories');
@@ -26,7 +29,7 @@ export default new Router({
     routes: [
         { // 默认页面
             path: '/',
-            redirect: '/home'
+            redirect: '/home/home-hot'
         },
         { // 主路由
             path: '',
@@ -42,11 +45,26 @@ export default new Router({
                             path: '/home',
                             component: Blank,
                             children: [
-                                {
-                                    path: '',
-                                    name: 'Home',
-                                    component: Home
-                                }
+                                { // 热卖
+                                    path: 'home-hot',
+                                    name: 'HomeHot',
+                                    component: HomeHot
+                                },
+                                { // 新品
+                                    path: 'home-new',
+                                    name: 'HomeNew',
+                                    component: HomeNew
+                                },
+                                { // 优惠
+                                    path: 'home-preferential',
+                                    name: 'HomePreferential',
+                                    component: HomePreferential
+                                },
+                                { // 更多
+                                    path: 'home-more',
+                                    name: 'HomeMore',
+                                    component: HomeMore
+                                },
                             ]
                         }
                     ]

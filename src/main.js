@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import './less/base.less';
+// 引入 Vant 库
 import Vant from 'vant';
 import 'vant/lib/index.css';
 

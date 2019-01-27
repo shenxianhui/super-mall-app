@@ -2,12 +2,16 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 11:21:41 
  * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 11:22:03
+ * @Last Modified time: 2019-01-27 20:53:20
  */
 <!-- 顶部标签栏 -->
 <template>
-    <div class="Tab">
-        New page
+    <div class="tab">
+        <van-tabs v-model="active" sticky swipeable animated @change="getPage">
+            <van-tab v-for="item in tabList" :key="item" :title="item">
+                <router-view></router-view>
+            </van-tab>
+        </van-tabs>
     </div>
 </template>
 
@@ -17,15 +21,50 @@ export default {
     components: {},
     props: {},
     data() {
-        return {};
+        return {
+            active: 0, // 当前栏
+
+            tabList: ['热卖', '新品', '优惠', '更多'] // tab 列表
+        };
     },
     computed: {},
     watch: {},
     created() {},
-    methods: {}
+    methods: {
+        // 切换页面
+        getPage(index, title) {
+            switch(index) {
+                case 0:
+                    this.$router.push('/home/home-hot');
+                    break;
+                case 1:
+                    this.$router.push('/home/home-new');
+                    break;
+                case 2:
+                    this.$router.push('/home/home-preferential');
+                    break;
+                case 3:
+                    this.$router.push('/home/home-more');
+                    break;
+                default:
+                    return false;
+            }
+        }
+    }
 };
 </script>
 
 <style scoped lang='less'>
-
+.tab {
+    width: 100%;
+    height: 100%;
+    /deep/ .van-tabs {
+        width: 100%;
+        height: 100%;
+        .van-tabs__content {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
 </style>
