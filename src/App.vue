@@ -17,6 +17,7 @@ export default {
                 $('html').css({fontSize: w / 375 * 100 + 'px'});
                 $('body').css({fontSize: '0.12rem'});
             });
+            $(window).resize();
         }
 	}
 }
