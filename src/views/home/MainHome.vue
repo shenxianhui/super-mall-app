@@ -1,13 +1,18 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 11:16:28 
- * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-28 10:05:16
+ * @Last Modified by: Shen Xianhui
+ * @Last Modified time: 2019-01-28 22:47:15
  */
 <!-- Home 主页 -->
 <template>
     <div class="main-home">
-        <Header></Header>
+        <Header
+            :isTitle="false"
+            :placeholder="placeholder"
+            :isScan="false"
+            :isBack="true">
+        </Header>
         <Tab></Tab>
         <!-- <router-view></router-view> -->
     </div>
@@ -25,7 +30,9 @@ export default {
     },
     props: {},
     data() {
-        return {};
+        return {
+            placeholder: '请输入内容'
+        };
     },
     computed: {},
     watch: {},

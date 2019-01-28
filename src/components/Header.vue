@@ -1,24 +1,52 @@
 /*
  * @Author: ShenXianhui 
  * @Date: 2019-01-28 09:55:14 
- * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-28 10:27:14
+ * @Last Modified by: Shen Xianhui
+ * @Last Modified time: 2019-01-28 22:48:07
  */
 <!-- 标题栏 -->
 <template>
     <div class="header">
         <div class="header-content">
-            <!-- <div class="back" :class="rightBtn.isShow ? 'mr' : ''" @click="back()">
+            <div
+                v-if="isScan"
+                class="left-icon"
+                :class="rightBtn.number === 2 ? 'mr' : ''"
+                @click="scan()">
+                <van-icon name="scan" />
+            </div>
+            <div
+                v-if="isBack"
+                class="left-icon"
+                :class="rightBtn.number === 2 ? 'mr' : ''"
+                @click="back()">
                 <van-icon name="arrow-left" />
-            </div> -->
+            </div>
             <div class="title">
-                <span  v-if="isTitle">{{ title }}g</span>
-                <input type="text" placeholder="lalalallala" readonly v-else @click="getSearchPage()">
+                <span  v-if="isTitle">{{ title }}</span>
+                <input  v-if="!isTitle" type="text" :placeholder="placeholder" readonly @click="getSearchPage()">
+                <img  v-if="!isTitle" src="@/images/icon/search.png" alt="搜索">
             </div>
             <div class="other">
-                <!-- <img src="@/images/icon/search.png" alt="图标"> -->
-                <van-icon name="chat-o" />
-                <van-icon name="ellipsis" />
+                <span
+                    v-if="!(rightBtn.imgSrc.length
+                        || rightBtn.iconName.length
+                        || rightBtn.textValue)">
+                </span>
+                <img
+                    v-for="(item, index) in rightBtn.imgSrc"
+                    :key="item.id"
+                    :src="item"
+                    alt="图标"
+                    @click="handleImg(index)">
+                <van-icon
+                    v-for="(item, index) in rightBtn.iconName"
+                    :key="item.id"
+                    :name="item"
+                    @click="handleIcon(index)" />
+                <p v-if="rightBtn.textValue" @click="handleText()">
+                    {{ rightBtn.textValue }}
+                </p>
             </div>
         </div>
     </div>
@@ -37,6 +65,18 @@ export default {
             type: String,
             default: ''
         },
+        placeholder: {
+            type: String,
+            default: ''
+        },
+        isScan: { // 显示左侧扫描
+            type: Boolean,
+            default: false
+        },
+        isBack: { // 显示左侧返回键
+            type: Boolean,
+            default: true
+        },
         setBack: { // 自定义返回键功能 ? 自定义 : 默认
             type: Boolean,
             default: false
@@ -45,13 +85,30 @@ export default {
             type: String,
             default: ''
         },
-        rightBtn: { // 右侧按钮 (默认不显示)
+        // leftBtn: { // 左侧按钮, 不传不显示, 最多显示一个
+        //     type: Object,
+        //     default: function () {
+        //         return {
+        //             imgSrc: '', // 选填, 图片地址 (按钮类型为img), 格式: require('src')
+        //             iconName: '' // 选填, 图标名称 (按钮类型为icon)
+        //         }
+        //     }
+        // },
+        rightBtn: { // 右侧按钮, 不传不显示
             type: Object,
             default: function () {
-                isShow: false; // 是否显示
-                number: 2; // 按钮数量 (最大为2)
-                imgSrc: ''; // 图片地址 (按钮类型为img)
-                iconName: ''; // 图标名称 (按钮类型为icon)
+                return {
+                    number: 1, // 按钮数量 (最大为2)
+                    imgSrc: [ // 选填, 图片地址 (按钮类型为img)
+                        // require('@/images/icon/search.png'),
+                        // require('@/images/icon/search.png')
+                    ],
+                    iconName: [ // 选填, 图标名称 (按钮类型为icon)
+                        // 'chat-o',
+                        // 'ellipsis'
+                    ],
+                    textValue: '' // 选填, 文字 (建议两个汉字)
+                }
             }
         }
     },
@@ -76,9 +133,34 @@ export default {
                     // this.$router.push(this.backURL);
                     this.$router.replace(this.backURL);
                 } else {
+                    // console.log(window.history.length);
                     window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/');
                 }
             }
+        },
+
+        // 扫描
+        scan() {
+            console.log('打开摄像机');
+        },
+
+        // 右侧按钮-img
+        handleImg(index) {
+            this.$emit('handleImg', {
+                index: index
+            });
+        },
+
+        // 右侧按钮-icon
+        handleIcon(index) {
+            this.$emit('handleIcon', {
+                index: index
+            });
+        },
+
+        //右侧按钮-text
+        handleText(index) {
+            this.$emit('handleText');
         }
     }
 };
@@ -100,9 +182,9 @@ export default {
 
         width: 100%;
         height: 100%;
-        .back {
+        .left-icon {
             display: flex;
-            justify-content: left;
+            justify-content: center;
             align-items: center;
 
             width: 0.36rem;
@@ -124,21 +206,27 @@ export default {
             height: 100%;
             max-width: 3rem;
             padding: 0 0.1rem;
-            input {
-                width: 100%;
-                height: 100%;
-                border: none;
-                padding: 0.05rem 0.1rem;
-                border-radius: 0.02rem;
-                color: #333;
-                background-color: #fff;
-            }
             span {
                 font-size: 0.18rem;
                 color: #fff;
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;
+            }
+            input {
+                width: 100%;
+                height: 100%;
+                border: none;
+                padding: 0.05rem 0.1rem 0.05rem 0.3rem;
+                border-radius: 0.02rem;
+                color: #333;
+                background-color: #fff;
+            }
+            img {
+                position: absolute;
+                left: 0.6rem;
+                width: 0.14rem;
+                height: 0.14rem;
             }
         }
         .other {
@@ -147,15 +235,24 @@ export default {
             justify-content: space-between;
 
             height: 100%;
-            .van-icon {
-                font-size: 0.2rem;
-                color: #fff;
-                margin-left: 0.1rem;
+            span {
+                width: 0.3rem;
             }
             img {
                 width: 0.18rem;
                 height: 0.18rem;
                 margin-left: 0.1rem;
+            }
+            .van-icon {
+                font-size: 0.2rem;
+                color: #fff;
+                margin-left: 0.1rem;
+            }
+            p {
+                min-width: 0.4rem;
+                font-size: 0.18rem;
+                color: #fff;
+                text-align: center;
             }
         }
     }
