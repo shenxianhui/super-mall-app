@@ -2,7 +2,7 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 17:54:56 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-29 14:34:35
+ * @Last Modified time: 2019-01-29 16:02:47
  */
 <!-- 首页-热卖 -->
 <template>
@@ -60,7 +60,20 @@
         </div>
         <!-- 优惠专区 -->
         <div class="preferential">
-            
+            <h2>特价专区</h2>
+            <div class="preferential-content">
+                <div class="content-left">
+                    <img src="@/images/common/mi_electric_cooker_4L.png" alt="商品">
+                </div>
+                <div class="content-right">
+                    <div class="content-top">
+                        <img src="@/images/common/mi_electric_cooker.png" alt="商品">
+                    </div>
+                    <div class="content-bottom">
+                        <img src="@/images/common/mi_loudspeaker_box.png" alt="商品">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -139,6 +152,47 @@ export default {
                 color: #999;
                 font-size: 0.12rem;
                 margin-top: 0.05rem;
+            }
+        }
+    }
+    .preferential {
+        width: 100%;
+        margin-top: 0.2rem;
+        h2 {
+            font-size: 0.18rem;
+            color: #333;
+        }
+        .preferential-content {
+            display: flex;
+            justify-content: space-between;
+
+            width: 100%;
+            margin-top: 0.1rem;
+            box-shadow: 2px 2px 15px 0px rgba(120, 120, 120, 0.3);
+            .content-left {
+                width: 1.76rem;
+                height: 2.64rem;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0.04rem;
+                }
+            }
+            .content-right {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                width: 49%;
+                div {
+                    width: 1.76rem;
+                    height: 1.3rem;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 0.04rem;
+                    }
+                }
             }
         }
     }
