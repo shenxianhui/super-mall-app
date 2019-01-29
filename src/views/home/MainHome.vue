@@ -10,8 +10,10 @@
         <Header
             :isTitle="false"
             :placeholder="placeholder"
-            :isScan="false"
-            :isBack="true">
+            :isScan="true"
+            :isBack="false"
+            :rightBtn="rightBtn"
+            @handleIcon="handleIcon">
         </Header>
         <Tab></Tab>
         <!-- <router-view></router-view> -->
@@ -31,13 +33,23 @@ export default {
     props: {},
     data() {
         return {
-            placeholder: '请输入内容'
+            placeholder: '请输入内容', // 搜索框提示
+
+            rightBtn: { // header 右侧按钮
+                number: 1, // 按钮数量
+                iconName: ['chat-o']
+            }
         };
     },
     computed: {},
     watch: {},
     created() {},
-    methods: {}
+    methods: {
+        // 右侧按钮
+        handleIcon() {
+            console.log('消息中心');
+        }
+    }
 };
 </script>
 

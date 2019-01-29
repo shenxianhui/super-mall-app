@@ -18,5 +18,8 @@ export default {
 </script>
 
 <style>
-
+#blank {
+    width: 100%;
+    height: 100%;
+}
 </style>

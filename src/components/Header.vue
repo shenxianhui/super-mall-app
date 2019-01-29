@@ -8,36 +8,42 @@
 <template>
     <div class="header">
         <div class="header-content">
+            <span v-if="!(isBack || isScan)" :class="rightBtn.number === 1 ? 'blank' : 'blank-double'"></span>
             <div
                 v-if="isScan"
                 class="left-icon"
                 :class="rightBtn.number === 2 ? 'mr' : ''"
-                @click="scan()">
+                @click="scan">
                 <van-icon name="scan" />
             </div>
             <div
                 v-if="isBack"
                 class="left-icon"
                 :class="rightBtn.number === 2 ? 'mr' : ''"
-                @click="back()">
+                @click="back">
                 <van-icon name="arrow-left" />
             </div>
             <div class="title">
-                <span  v-if="isTitle">{{ title }}</span>
-                <input  v-if="!isTitle" type="text" :placeholder="placeholder" readonly @click="getSearchPage()">
+                <div v-if="isTitle" class="title-content" @click="handleTitle">
+                    <span :class="(titleImg || titleIcon) ? 'title-text' : ''">{{ title }}</span>
+                    <img v-if="titleImg" :src="titleImg" alt="icon">
+                    <van-icon v-if="titleIcon" :name="titleIcon" />
+                </div>
+                <input  v-if="!isTitle" type="text" :placeholder="placeholder" readonly @click="getSearchPage">
                 <img  v-if="!isTitle" src="@/images/icon/search.png" alt="搜索">
             </div>
             <div class="other">
                 <span
-                    v-if="!(rightBtn.imgSrc.length
-                        || rightBtn.iconName.length
+                    class="blank"
+                    v-if="!((rightBtn.imgSrc && rightBtn.imgSrc.length)
+                        || (rightBtn.iconName && rightBtn.iconName.length)
                         || rightBtn.textValue)">
                 </span>
                 <img
                     v-for="(item, index) in rightBtn.imgSrc"
                     :key="item.id"
                     :src="item"
-                    alt="图标"
+                    alt="icon"
                     @click="handleImg(index)">
                 <van-icon
                     v-for="(item, index) in rightBtn.iconName"
@@ -62,6 +68,14 @@ export default {
             default: true
         },
         title: { // 标题内容
+            type: String,
+            default: ''
+        },
+        titleImg: { // 标题右侧小图标 (img), 格式: require('src')
+            type: String,
+            default: ''
+        },
+        titleIcon: { // 标题右侧小图标 (icon)
             type: String,
             default: ''
         },
@@ -161,6 +175,11 @@ export default {
         //右侧按钮-text
         handleText(index) {
             this.$emit('handleText');
+        },
+
+        // 标题按钮
+        handleTitle() {
+            this.$emit('handleTitle');
         }
     }
 };
@@ -206,12 +225,33 @@ export default {
             height: 100%;
             max-width: 3rem;
             padding: 0 0.1rem;
-            span {
-                font-size: 0.18rem;
-                color: #fff;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
+            .title-content {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                span {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    font-size: 0.18rem;
+                    color: #fff;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                img {
+                    width: 0.14rem;
+                    height: 0.14rem;
+                    margin-top: 0.02rem;
+                }
+                .van-icon {
+                    color: #fff;
+                    margin-top: 0.02rem;
+                }
+                .title-text {
+                    margin: 0 0.03rem 0 0.2rem;
+                }
             }
             input {
                 width: 100%;
@@ -222,7 +262,7 @@ export default {
                 color: #333;
                 background-color: #fff;
             }
-            img {
+            > img {
                 position: absolute;
                 left: 0.6rem;
                 width: 0.14rem;
@@ -235,9 +275,6 @@ export default {
             justify-content: space-between;
 
             height: 100%;
-            span {
-                width: 0.3rem;
-            }
             img {
                 width: 0.18rem;
                 height: 0.18rem;
@@ -255,6 +292,13 @@ export default {
                 text-align: center;
             }
         }
+    }
+
+    .blank {
+        width: 0.3rem;
+    }
+    .blank-double {
+        width: 0.8rem;
     }
 }
 </style>
