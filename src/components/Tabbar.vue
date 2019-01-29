@@ -1,13 +1,13 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:44:11 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 19:05:22
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-01-29 13:54:28
  */
 <!-- 底部标签栏 -->
 <template>
     <div class='tabbar'>
-        <van-tabbar v-model="active">
+        <van-tabbar v-model="active" active-color="#ff6700">
             <!-- 注: router-link 文本改变颜色需要设置, 所以用下面方法 -->
             <!-- <van-tabbar-item icon="home-o">
                 <router-link to="/home">首页</router-link>
@@ -47,5 +47,19 @@ export default {
 </script>
 
 <style scoped lang='less'>
-
+.tabbar {
+    /deep/ .van-tabbar {
+        height: 0.5rem;
+        background-color: #fdfdfd;
+        box-shadow: 0px 2px 20px 0px rgba(120, 120, 120, 0.1);
+        .van-tabbar-item {
+            .van-tabbar-item__icon {
+                font-size: 0.18rem;
+            }
+            .van-tabbar-item__text {
+                font-size: 0.12rem;
+            }
+        }
+    }
+}
 </style>

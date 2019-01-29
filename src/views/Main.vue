@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-26 22:55:24 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 11:17:21
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-01-29 14:05:40
  */
 <!-- 主页 -->
 <template>
@@ -27,5 +27,6 @@ export default {
 .main {
     width: 100%;
     height: 100%;
+    padding-bottom: 0.5rem;
 }
 </style>

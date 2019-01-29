@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 11:21:41 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 20:53:20
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-01-29 11:13:28
  */
 <!-- 顶部标签栏 -->
 <template>
@@ -61,6 +61,25 @@ export default {
     /deep/ .van-tabs {
         width: 100%;
         height: 100%;
+        padding-top: 0.35rem;
+        .van-tabs__wrap {
+            height: 0.35rem;
+            .van-tabs__nav {
+                padding-bottom: 0;
+                .van-tabs__line {
+                    height: 0.02rem;
+                    bottom: 0;
+                    background: #ff6700;
+                }
+            }
+            .van-tab {
+                line-height: 0.37rem;
+                font-size: 0.14rem;
+            }
+            .van-tab--active {
+                color: #ff6700;
+            }
+        }
         .van-tabs__content {
             width: 100%;
             height: 100%;
