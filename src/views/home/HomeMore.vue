@@ -1,20 +1,20 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 17:59:27 
- * @Last Modified by:   Shen Xianhui 
- * @Last Modified time: 2019-01-27 17:59:27 
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-01-30 17:04:02
  */
 <!-- 首页-更多 -->
 <template>
-    <div class="home-more">
+    <div class="home-more" ref="main">
         <van-list
             v-model="loading"
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad">
-            <div class="goods">
+            <div class="goods" ref="con">
                 <div class="goods-content" v-for="item in dataList" :key="item.id">
-                    <div class="goods-picture">
+                    <div class="goods-picture" @click="get">
                         <img :src="item.imgSrc" alt="商品">
                     </div>
                     <p class="goods-name">{{ item.name || '-' }}</p>
@@ -23,13 +23,18 @@
                 </div>
             </div>
         </van-list>
+        <ToTop :distance="distance"></ToTop>
     </div>
 </template>
 
 <script>
+import ToTop from '@/components/ToTop'
+
 export default {
     name: 'HomeMore',
-    components: {},
+    components: {
+        ToTop
+    },
     props: {},
     data() {
         return {
@@ -43,14 +48,35 @@ export default {
                 //     price: '1299',
                 //     imgSrc: require('@/images/common/mi_phone_1.png')
                 // }
-            ]
+            ],
+            scrollParam: { // 回到顶部参数
+                way: 1,
+                distance: 20,
+                time: 600
+            }
         };
     },
-    computed: {},
+    computed: {
+        distance() {
+            if(this.$refs.main){
+                return this.$refs.main.scrollTop;
+            }else{
+                return 0;
+            }
+            
+        }
+    },
     watch: {},
-    created() {},
+    mounted() {
+        let that = this;
+        this.$refs.main.onscroll=function(){
+            console.log(that.$refs.main.scrollTop);
+        }
+        
+        
+    },
     methods: {
-        onLoad() {
+        onLoad() { // 无限加载
             setTimeout(() => {
                 for (let i = 0; i < 20; i++) {
                     let obj = {
@@ -75,6 +101,10 @@ export default {
                     this.finished = true;
                 }
             }, 500);
+        },
+        get () {
+            // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            console.log(this.$refs.con.offsetTop);
         }
     }
 };
