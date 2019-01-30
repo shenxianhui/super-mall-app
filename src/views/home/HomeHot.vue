@@ -7,74 +7,76 @@
 <!-- 首页-热卖 -->
 <template>
     <div class="home-hot">
-        <!-- 轮播图 -->
-        <div class="banner">
-            <van-swipe :autoplay="4000" indicator-color="white">
-                <van-swipe-item v-for="item in banners" :key="item.num">
-                    <img :src="item.src" alt="轮播图">
-                </van-swipe-item>
-            </van-swipe>
-        </div>
-        <!-- 商品分类 -->
-        <div class="tabs">
-            <div class="tab">
-                <img src="@/images/common/tab_1.png" alt="icon">
-                <p>热卖商品</p>
+        <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+            <!-- 轮播图 -->
+            <div class="banner">
+                <van-swipe :autoplay="4000" indicator-color="white">
+                    <van-swipe-item v-for="item in banners" :key="item.num">
+                        <img :src="item.src" alt="轮播图">
+                    </van-swipe-item>
+                </van-swipe>
             </div>
-            <div class="tab">
-                <img src="@/images/common/tab_2.png" alt="icon">
-                <p>小米闪购</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_3.png" alt="icon">
-                <p>以旧换新</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_4.png" alt="icon">
-                <p>1分拼团</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_5.png" alt="icon">
-                <p>超值特卖</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_6.png" alt="icon">
-                <p>真心想要</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_7.png" alt="icon">
-                <p>每日甄选</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_8.png" alt="icon">
-                <p>电视特卖</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_9.png" alt="icon">
-                <p>游戏配件</p>
-            </div>
-            <div class="tab">
-                <img src="@/images/common/tab_10.png" alt="icon">
-                <p>更多商品</p>
-            </div>
-        </div>
-        <!-- 优惠专区 -->
-        <div class="preferential">
-            <h2>特价专区</h2>
-            <div class="preferential-content">
-                <div class="content-left">
-                    <img src="@/images/common/mi_electric_cooker_4L.png" alt="商品">
+            <!-- 商品分类 -->
+            <div class="tabs">
+                <div class="tab">
+                    <img src="@/images/common/tab_1.png" alt="icon">
+                    <p>热卖商品</p>
                 </div>
-                <div class="content-right">
-                    <div class="content-top">
-                        <img src="@/images/common/mi_electric_cooker.png" alt="商品">
-                    </div>
-                    <div class="content-bottom">
-                        <img src="@/images/common/mi_loudspeaker_box.png" alt="商品">
-                    </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_2.png" alt="icon">
+                    <p>小米闪购</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_3.png" alt="icon">
+                    <p>以旧换新</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_4.png" alt="icon">
+                    <p>1分拼团</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_5.png" alt="icon">
+                    <p>超值特卖</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_6.png" alt="icon">
+                    <p>真心想要</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_7.png" alt="icon">
+                    <p>每日甄选</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_8.png" alt="icon">
+                    <p>电视特卖</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_9.png" alt="icon">
+                    <p>游戏配件</p>
+                </div>
+                <div class="tab">
+                    <img src="@/images/common/tab_10.png" alt="icon">
+                    <p>更多商品</p>
                 </div>
             </div>
-        </div>
+            <!-- 优惠专区 -->
+            <div class="preferential">
+                <h2>特价专区</h2>
+                <div class="preferential-content">
+                    <div class="content-left">
+                        <img src="@/images/common/mi_electric_cooker_4L.png" alt="商品">
+                    </div>
+                    <div class="content-right">
+                        <div class="content-top">
+                            <img src="@/images/common/mi_electric_cooker.png" alt="商品">
+                        </div>
+                        <div class="content-bottom">
+                            <img src="@/images/common/mi_loudspeaker_box.png" alt="商品">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </van-pull-refresh>
     </div>
 </template>
 
@@ -85,7 +87,9 @@ export default {
     props: {},
     data() {
         return {
-            banners: [
+            isLoading: false, // 下拉刷新
+
+            banners: [ // 轮播图
                 {
                     num: 1,
                     src: require('@/images/common/banner_1.png')
@@ -104,7 +108,15 @@ export default {
     computed: {},
     watch: {},
     created() {},
-    methods: {}
+    methods: {
+        // 下拉刷新
+        onRefresh() {
+            setTimeout(() => {
+                this.$toast('刷新成功');
+                this.isLoading = false;
+            }, 500);
+        }
+    }
 };
 </script>
 
@@ -113,10 +125,10 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #fff;
-    padding: 0 0.1rem;
     overflow: auto;
     .banner {
         margin-top: 0.1rem;
+        padding: 0 0.1rem;
         /deep/ .van-swipe {
             width: 100%;
             height: 1.5rem;
@@ -135,6 +147,7 @@ export default {
 
         width: 100%;
         margin-top: 0.3rem;
+        padding: 0 0.1rem;
         .tab {
             display: flex;
             justify-content: center;
@@ -158,6 +171,7 @@ export default {
     .preferential {
         width: 100%;
         margin-top: 0.2rem;
+        padding: 0 0.1rem;
         h2 {
             font-size: 0.18rem;
             color: #333;
@@ -168,14 +182,15 @@ export default {
 
             width: 100%;
             margin-top: 0.1rem;
-            box-shadow: 2px 2px 15px 0px rgba(120, 120, 120, 0.3);
+            padding-bottom: 0.2rem;
             .content-left {
-                width: 1.76rem;
+                width: 1.75rem;
                 height: 2.64rem;
                 img {
                     width: 100%;
                     height: 100%;
                     border-radius: 0.04rem;
+                    box-shadow: 2px 2px 15px 0px rgba(120, 120, 120, 0.3);
                 }
             }
             .content-right {
@@ -183,14 +198,15 @@ export default {
                 flex-direction: column;
                 justify-content: space-between;
 
-                width: 49%;
+                width: 1.75rem;
                 div {
-                    width: 1.76rem;
+                    width: 100%;
                     height: 1.3rem;
                     img {
                         width: 100%;
                         height: 100%;
                         border-radius: 0.04rem;
+                        box-shadow: 2px 2px 15px 0px rgba(120, 120, 120, 0.3);
                     }
                 }
             }
