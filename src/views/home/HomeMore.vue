@@ -6,15 +6,15 @@
  */
 <!-- 首页-更多 -->
 <template>
-    <div class="home-more" ref="main">
+    <div class="home-more" ref="homeMore">
         <van-list
             v-model="loading"
             :finished="finished"
             finished-text="没有更多了"
             @load="onLoad">
-            <div class="goods" ref="con">
+            <div class="goods">
                 <div class="goods-content" v-for="item in dataList" :key="item.id">
-                    <div class="goods-picture" @click="get">
+                    <div class="goods-picture">
                         <img :src="item.imgSrc" alt="商品">
                     </div>
                     <p class="goods-name">{{ item.name || '-' }}</p>
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </van-list>
-        <ToTop :distance="distance"></ToTop>
+        <ToTop @toTop="toTop"></ToTop>
     </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
         return {
             loading: false, // 加载中
             finished: false, // 加载完成
+            homeMore: 'homeMore',
 
             dataList: [ // 数据列表
                 // {
@@ -56,24 +57,11 @@ export default {
             }
         };
     },
-    computed: {
-        distance() {
-            if(this.$refs.main){
-                return this.$refs.main.scrollTop;
-            }else{
-                return 0;
-            }
-            
-        }
-    },
     watch: {},
     mounted() {
-        let that = this;
-        this.$refs.main.onscroll=function(){
-            console.log(that.$refs.main.scrollTop);
-        }
-        
-        
+        // this.$refs.homeMore.onscroll = function() {
+        //     console.log(this.scrollTop);
+        // }
     },
     methods: {
         onLoad() { // 无限加载
@@ -102,9 +90,10 @@ export default {
                 }
             }, 500);
         },
-        get () {
-            // var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            console.log(this.$refs.con.offsetTop);
+
+        // 回到顶部
+        toTop() {
+            this.$refs.homeMore.scrollTop = 0;
         }
     }
 };
