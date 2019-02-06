@@ -194,6 +194,7 @@ export default {
     height: 0.42rem;
     padding: 0.07rem 0.1rem;
     background: #ff6700;
+    z-index: 99999;
     .header-content {
         display: flex;
         align-items: center;

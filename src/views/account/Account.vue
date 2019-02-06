@@ -7,6 +7,7 @@
 <!-- 我的 -->
 <template>
     <div class="account">
+        <!-- 标题栏 -->
         <Header
             :isTitle="true"
             title="个人中心"

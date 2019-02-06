@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 17:54:56 
- * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-29 16:02:47
+ * @Last Modified by: Shen Xianhui
+ * @Last Modified time: 2019-02-05 10:08:57
  */
 <!-- 首页-热卖 -->
 <template>
