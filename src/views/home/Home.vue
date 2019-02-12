@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
-import Tab from '@/components/Tab'
+import Header from '@/components/Header';
+import Tab from '@/components/Tab';
 
 export default {
     name: 'Home',

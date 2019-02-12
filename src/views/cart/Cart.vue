@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from '@/components/Header';
 
 export default {
     name: 'Cart',
@@ -94,6 +94,9 @@ export default {
     height: 100%;
     padding-top: 0.42rem;
     background-color: #fff;
+    /deep/ .van-pull-refresh {
+        overflow: auto;
+    }
     .cart-container {
         .goods-number {
             width: 100%;

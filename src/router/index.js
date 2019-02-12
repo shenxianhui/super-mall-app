@@ -16,10 +16,6 @@ const HomeMore = resolve => require.ensure([], () => resolve(require('@/views/ho
 
 /* 分类 */
 const Categories = resolve => require.ensure([], () => resolve(require('@/views/categories/Categories')), 'Categories');
-// const CategoriesHot = resolve => require.ensure([], () => resolve(require('@/views/categories/CategoriesHot')), 'CategoriesHot');
-// const CategoriesNew = resolve => require.ensure([], () => resolve(require('@/views/categories/CategoriesNew')), 'CategoriesNew');
-// const CategoriesPreferential = resolve => require.ensure([], () => resolve(require('@/views/categories/CategoriesPreferential')), 'CategoriesPreferential');
-// const CategoriesMore = resolve => require.ensure([], () => resolve(require('@/views/categories/CategoriesMore')), 'CategoriesMore');
 
 /* 购物车 */
 const Cart = resolve => require.ensure([], () => resolve(require('@/views/cart/Cart')), 'Cart');
@@ -84,39 +80,6 @@ export default new Router({
                         }
                     ]
                 },
-                // { // 分类
-                //     path: '',
-                //     name: 'Categories',
-                //     component: Categories,
-                //     children: [
-                //         {
-                //             path: '/categories',
-                //             component: Blank,
-                //             children: [
-                //                 { // 热卖
-                //                     path: 'categories-hot',
-                //                     name: 'CategoriesHot',
-                //                     component: CategoriesHot
-                //                 },
-                //                 { // 新品
-                //                     path: 'categories-new',
-                //                     name: 'CategoriesNew',
-                //                     component: CategoriesNew
-                //                 },
-                //                 { // 优惠
-                //                     path: 'categories-preferential',
-                //                     name: 'CategoriesPreferential',
-                //                     component: CategoriesPreferential
-                //                 },
-                //                 { // 更多
-                //                     path: 'categories-more',
-                //                     name: 'CategoriesMore',
-                //                     component: CategoriesMore
-                //                 }
-                //             ]
-                //         }
-                //     ]
-                // },
                 { // 购物车
                     path: '/cart',
                     component: Blank,

@@ -125,7 +125,9 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #fff;
-    overflow: auto;
+    /deep/ .van-pull-refresh {
+        overflow: auto;
+    }
     .banner {
         margin-top: 0.1rem;
         padding: 0 0.1rem;

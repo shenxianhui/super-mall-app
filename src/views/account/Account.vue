@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
+import Header from '@/components/Header';
 
 export default {
     name: 'Account',
@@ -153,6 +153,9 @@ export default {
     width: 100%;
     height: 100%;
     padding-top: 0.42rem;
+    /deep/ .van-pull-refresh {
+        overflow: auto;
+    }
     .user {
         width: 100%;
         min-height: 100%;

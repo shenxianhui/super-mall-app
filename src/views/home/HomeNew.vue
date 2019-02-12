@@ -1,19 +1,25 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 17:56:16 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-27 19:04:18
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-12 15:08:30
  */
 <!-- 主页-新品 -->
 <template>
     <div class="home-new">
-        <van-list
-            v-model="loading"
-            :finished="finished"
-            finished-text="没有更多了"
-            @load="onLoad">
-            <van-cell v-for="item in list" :key="item" :title="item" />
-        </van-list>
+        <div class="phone">
+            <h1 :class="isShow ? 'mi-title-show' : ''"><span>小米</span> 让生活更精彩</h1>
+            <img
+                class="mi-phone"
+                :class="isShow ? 'mi-phone-show' : ''"
+                src="@/images/common/mi_phone_nobg.png"
+                alt="手机">
+            <img
+                class="mi-shadow"
+                :class="isShow ? 'mi-shadow-show' : ''"
+                src="@/images/common/mi_phone_nobg_shadow.png"
+                alt="阴影">
+        </div>
     </div>
 </template>
 
@@ -24,32 +30,17 @@ export default {
     props: {},
     data() {
         return {
-            loading: false, // 加载中
-            finished: false, // 加载完成
-
-            list: [] // 内容
+            isShow: false // 显示图片
         };
     },
     computed: {},
     watch: {},
-    created() {},
-    methods: {
-        onLoad() {
-            // 异步更新数据
-            setTimeout(() => {
-                for (let i = 0; i < 10; i++) {
-                    this.list.push(this.list.length + 1);
-                }
-                // 加载状态结束
-                this.loading = false;
-
-                // 数据全部加载完成
-                if (this.list.length >= 40) {
-                    this.finished = true;
-                }
-            }, 500);
-        }
-    }
+    created() {
+        setInterval(() => {
+            this.isShow = true;
+        }, 100)
+    },
+    methods: {}
 };
 </script>
 
@@ -57,8 +48,60 @@ export default {
 .home-new {
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    background: linear-gradient(to left, #e6e6e6, #f0f0f0, #e6e6e6);
     padding: 0 0.1rem;
-    overflow: auto;
+    .phone {
+        position: relative;
+
+        width: 100%;
+        height: 100%;
+        h1 {
+            position: absolute;
+            top: 0.8rem;
+
+            width: 100%;
+            text-align: center;
+            font-size: 0.35rem;
+            opacity: 0;
+            transform: scale(0);
+            span {
+                color: #ff6700;
+            }
+        }
+        .mi-title-show {
+            opacity: 1;
+            transform: scale(1);
+            transition: all 1s;
+        }
+        .mi-phone {
+            position: absolute;
+            top: 2.5rem;
+            left: 50%;
+            transform: translate(-50%, -150%);
+
+            width: 98%;
+            opacity: 0;
+            z-index: 1;
+        }
+        .mi-phone-show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            transition: all 1s;
+        }
+        .mi-shadow {
+            position: absolute;
+            top: 3rem;
+            left: 50%;
+            transform: translate(-50%, 120%);
+            opacity: 0;
+
+            width: 98%;
+        }
+        .mi-shadow-show {
+            transform: translate(-50%, 0);
+            opacity: 1;
+            transition: all 1s;
+        }
+    }
 }
 </style>
