@@ -2,7 +2,7 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 11:21:41 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-29 11:13:28
+ * @Last Modified time: 2019-02-13 09:25:14
  */
 <!-- 顶部标签栏 -->
 <template>
@@ -18,8 +18,6 @@
 <script>
 export default {
     name: 'Tab',
-    components: {},
-    props: {},
     data() {
         return {
             active: 0, // 当前栏
@@ -27,9 +25,6 @@ export default {
             tabList: ['热卖', '新品', '优惠', '更多'] // tab 列表
         };
     },
-    computed: {},
-    watch: {},
-    created() {},
     methods: {
         // 切换页面
         getPage(index, title) {

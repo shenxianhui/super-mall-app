@@ -2,7 +2,7 @@
  * @Author: ShenXianhui 
  * @Date: 2019-01-30 14:17:27 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-01-30 16:47:11
+ * @Last Modified time: 2019-02-13 09:08:25
  */
 <!-- 回到顶部 -->
 <template>
@@ -14,14 +14,6 @@
 <script>
 export default {
     name: 'ToTop',
-    components: {},
-    props: {},
-    data() {
-        return {};
-    },
-    computed: {},
-    watch: {},
-    created() {},
     methods: {
         // 回到顶部
         toTop () {

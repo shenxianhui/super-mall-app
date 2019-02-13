@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:44:11 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-02-05 17:13:57
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-13 09:05:57
  */
 <!-- 底部标签栏 -->
 <template>
@@ -32,17 +32,11 @@
 <script>
 export default {
     name: 'tabbar',
-    components: {},
-    props: {},
     data() {
         return {
             active: 0
         };
-    },
-    computed: {},
-    watch: {},
-    created() {},
-    methods: {}
+    }
 };
 </script>
 

@@ -1,8 +1,8 @@
 /*
  * @Author: ShenXianhui 
  * @Date: 2019-01-28 09:55:14 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-01-28 22:48:07
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-13 16:51:13
  */
 <!-- 标题栏 -->
 <template>
@@ -61,7 +61,6 @@
 <script>
 export default {
     name: 'Header',
-    components: {},
     props: {
         isTitle: { // 标题 ? 标题 : 输入框
             type: Boolean,
@@ -126,12 +125,6 @@ export default {
             }
         }
     },
-    data() {
-        return {};
-    },
-    computed: {},
-    watch: {},
-    created() {},
     methods: {
         // 搜索框
         getSearchPage() {
