@@ -12,8 +12,8 @@
                 <!-- 按钮 -->
                 <div class="pointer" @click="getPrize">开始</div>
                 <i :style="{
-                        transform: isRevolve ? 'rotate(5000deg)' : '',
-                        transition: isRevolve ? 'transform 6s cubic-bezier(.22,.74,.38,.99)' : ''
+                        transform: setRotate,
+                        transition: isRevolve ? 'transform ' + duration + 's cubic-bezier(' + curve + ')' : ''
                     }">
                 </i>
                 <!-- 奖项 -->
@@ -46,7 +46,7 @@
 export default {
     name: 'LotteryTurntable',
     props: {
-        prize: { // 奖品内容
+        prize: { // 奖品内容 (10个)
             type: Array,
             default: function () {
                 return ['谢谢参与', '1000积分', '5元话费', 'iPhone XS', '1元话费', '100积分', '10元话费', '再来一次', '50积分', '宝马 X5']
@@ -55,12 +55,12 @@ export default {
         probability: { // 中奖概率
             type: Array,
             default: function () {
-                return ['10%', '20%', '...']
+                return ['0.1', '0.1', '0.1', '0.1', '0.1', '0.1', '0.1', '0.1', '0.1', '0.1']
             }
         },
         duration: { // 转动时间
             type: Number,
-            default: 6
+            default: 5
         },
         circulate: { // 最少转动圈数
             type: Number,
@@ -74,18 +74,120 @@ export default {
     data() {
         return {
             isRevolve: false, // 点击抽奖
+            rotate: 0
         };
     },
-    computed: {},
+    computed: {
+        // 设置圈数
+        setRotate() {
+            return 'rotate(' + this.rotate + 'deg)';
+        }
+    },
     watch: {},
     created() {},
     methods: {
         // 点击抽奖按钮
         getPrize() {
-            !this.isRevolve ? this.isRevolve = true : this.isRevolve = false;
-        },
-        
+            if (!this.isRevolve) {
+                let pro = Math.random();
+                let [n0, n1, n2, n3, n4, n5, n6, n7, n8, n9] = [
+                    Number(this.probability[0]),
+                    Number(this.probability[1]),
+                    Number(this.probability[2]),
+                    Number(this.probability[3]),
+                    Number(this.probability[4]),
+                    Number(this.probability[5]),
+                    Number(this.probability[6]),
+                    Number(this.probability[7]),
+                    Number(this.probability[8]),
+                    Number(this.probability[9])
+                ];
+                let num;
+                let text;
 
+                switch(true) { /* 概率抽奖 */
+                    case 0 <= pro && pro < n0:
+                        num = Math.round(Math.random() * 18) || Math.round(Math.random() * 18 + 342);
+                        break;
+                    case n0 <= pro && pro < n0 + n1:
+                        num = Math.round(Math.random() * 36 + 18);
+                        break;
+                    case n0 + n1 <= pro && pro < n0 + n1 + n2:
+                        num = Math.round(Math.random() * 36 + 54);
+                        break;
+                    case n0 + n1 + n2 <= pro && pro < n0 + n1 + n2 + n3:
+                        num = Math.round(Math.random() * 36 + 90);
+                        break;
+                    case n0 + n1 + n2 + n3 <= pro && pro < n0 + n1 + n2 + n3 + n4:
+                        num = Math.round(Math.random() * 36 + 126);
+                        break;
+                    case n0 + n1 + n2 + n3 + n4 <= pro && pro < n0 + n1 + n2 + n3 + n4 + n5:
+                        num = Math.round(Math.random() * 36 + 162);
+                        break;
+                    case n0 + n1 + n2 + n3 + n4 + n5 <= pro && pro < n0 + n1 + n2 + n3 + n4 + n5 + n6:
+                        num = Math.round(Math.random() * 36 + 198);
+                        break;
+                    case n0 + n1 + n2 + n3 + n4 + n5 + n6 <= pro && pro < n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7:
+                        num = Math.round(Math.random() * 36 + 234);
+                        break;
+                    case n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7 <= pro && pro < n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8:
+                        num = Math.round(Math.random() * 36 + 270);
+                        break;
+                    case n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 <= pro && pro < n0 + n1 + n2 + n3 + n4 + n5 + n6 + n7 + n8 + n9:
+                        num = Math.round(Math.random() * 36 + 306);
+                        break;
+                    default:
+                        return false;
+                }
+
+                this.isRevolve = true;
+                this.rotate = num + (360 * this.circulate);
+                setTimeout(() => { /* 防止重复点击 */
+                    switch(true) { /* 获取 text 文本信息 */
+                        case num >= 342 || num < 18:
+                            text = this.prize[0];
+                            break;
+                        case 18 <= num && num < 54:
+                            text = this.prize[1];
+                            break;
+                        case 54 <= num && num < 90:
+                            text = this.prize[2];
+                            break;
+                        case 90 <= num && num < 126:
+                            text = this.prize[3];
+                            break;
+                        case 126 <= num && num < 162:
+                            text = this.prize[4];
+                            break;
+                        case 162 <= num && num < 198:
+                            text = this.prize[5];
+                            break;
+                        case 198 <= num && num < 234:
+                            text = this.prize[6];
+                            break;
+                        case 234 <= num && num < 270:
+                            text = this.prize[7];
+                            break;
+                        case 270 <= num && num < 306:
+                            text = this.prize[8];
+                            break;
+                        case 306 <= num && num < 342:
+                            text = this.prize[9];
+                            break;
+                        default: 
+                            return false;
+                    }
+
+                    this.$dialog.alert({
+                        title: '恭喜您抽中',
+                        message: text
+                    }).then(() => {
+                        this.isRevolve = false;
+                        this.rotate = 0;
+                    });
+                }, this.duration * 1000 + 1000);
+            }
+        }
     }
 };
 </script>
