@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:16:12 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-02-05 17:45:47
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-15 14:54:19
  */
 <!-- 分类 -->
 <template>
@@ -28,8 +28,8 @@
         <!-- 右侧商品区 -->
         <div class="goods">
             <div class="goods-list" ref="goodsList">
-                <div class="goods-details" v-for="item in dataList" :key="item.id">
-                    <img src="@/images/common/mi_loudspeaker_box.png" alt="商品">
+                <div class="goods-details" v-for="item in dataList" :key="item.id" @click="getDetails()">
+                    <img :src="setImg(item.imgSrc)" alt="商品">
                     <div class="goods-info">
                         <h3>【{{ item.label }}】{{ item.name }}</h3>
                         <p>{{ item.info }}</p>
@@ -63,9 +63,10 @@ export default {
             dataList: [ // 商品列表
                 {
                     label: '热卖',
-                    name: '北京烤鸭',
-                    info: '老北京特产, 外酥里嫩, 美味十足',
-                    price: '88.88'
+                    name: '小米手机',
+                    info: '超高性价比, 你值得拥有',
+                    price: '2999',
+                    imgSrc: 'images/common/mi_phone_6.png'
                 }
             ]
         };
@@ -82,18 +83,21 @@ export default {
         // 左侧tab切换
         onChange(key) {
             let randomNum;
+            let phoneNum;
 
             this.$refs.goodsList.scrollTop = 0;
-            randomNum = Math.round(Math.random()*20 + 1);
+            randomNum = Math.round(Math.random() * 20 + 1);
             this.dataList.length = 0;
             for (let i = 0; i < randomNum; i++) {
+                phoneNum = Math.round(Math.random() * 7 + 1);
                 let goods = {
                     label: '热卖',
-                    name: '北京烤鸭',
-                    info: '老北京特产, 外酥里嫩, 美味十足',
-                    price: '88.88'
+                    name: '小米手机',
+                    info: '超高性价比, 你值得拥有',
+                    price: '',
+                    imgSrc: 'images/common/mi_phone_' + phoneNum + '.png'
                 }
-                let price = Math.round(Math.random() * 20000) / 100;
+                let price = Math.round(Math.random() * 4000) + 1000;
 
                 goods.price = price;
                 this.dataList.push(goods);
@@ -124,6 +128,16 @@ export default {
                 default:
                     return false;
             }
+        },
+
+        // 设置图片地址
+        setImg(v) {
+            return require('../../' + v);
+        },
+
+        // 获取商品详情
+        getDetails() {
+            this.$router.push('/goods');
         }
     }
 };

@@ -23,6 +23,9 @@ const Cart = resolve => require.ensure([], () => resolve(require('@/views/cart/C
 /* 我的 */
 const Account = resolve => require.ensure([], () => resolve(require('@/views/account/Account')), 'Account');
 
+/* 商品 */
+const Goods = resolve => require.ensure([], () => resolve(require('@/views/goods/Goods')), 'Goods');
+
 Vue.use(Router)
 
 export default new Router({
@@ -103,6 +106,11 @@ export default new Router({
                     ]
                 }
             ]
+        },
+        { // 商品
+            path: '/goods',
+            name: 'Goods',
+            component: Goods
         }
     ]
 })
