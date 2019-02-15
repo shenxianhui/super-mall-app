@@ -77,7 +77,9 @@ export default {
         return {
             isRevolve: false, // 点击抽奖
             isFinish: false, // 抽奖完成
-            rotate: 0
+            rotate: 0, // 旋转圈数
+            rotateRotate: null, // 定时器-抽奖
+            rotateLight: null // 定时器-彩灯
         };
     },
     computed: {
@@ -88,6 +90,13 @@ export default {
     },
     watch: {},
     created() {},
+    beforeDestroy() {
+        // 关闭定时器
+        clearTimeout(this.rotateRotate);
+        clearTimeout(this.rotateLight);
+        this.rotateRotate = null;
+        this.rotateLight = null;
+    },
     methods: {
         // 点击抽奖按钮
         getPrize() {
@@ -145,7 +154,7 @@ export default {
 
                 this.isRevolve = true;
                 this.rotate = num + (360 * this.circulate);
-                setTimeout(() => { /* 防止重复点击 */
+                this.rotateRotate = setTimeout(() => { /* 防止重复点击 */
                     switch(true) { /* 获取 text 文本信息 */
                         case num >= 342 || num < 18:
                             text = this.prize[0];
@@ -192,7 +201,7 @@ export default {
                     this.isFinish = false; /* 关闭高频彩灯 */
                 }, this.duration * 1000 + 1500);
 
-                setTimeout(() => {
+                this.rotateLight  = setTimeout(() => {
                     this.isFinish = true; /* 开启高频彩灯 */
                 }, this.duration * 1000);
             }
