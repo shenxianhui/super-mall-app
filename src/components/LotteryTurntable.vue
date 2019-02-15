@@ -4,13 +4,14 @@
  * @Last Modified by: ShenXianhui
  * @Last Modified time: 2019-02-13 17:19:49
  */
+ /* 参考文章: http://www.cnblogs.com/wenruo/archive/2018/10/04/9732704.html */
 <!-- 抽奖系统-转盘-CSS3 -->
 <template>
     <div class="lottery-turntable">
         <div class="wrapper">
             <div class="panel">
                 <!-- 按钮 -->
-                <div class="pointer" @click="getPrize">开始</div>
+                <div class="pointer" @click="getPrize()">开始</div>
                 <i :style="{
                         transform: setRotate,
                         transition: isRevolve ? 'transform ' + duration + 's cubic-bezier(' + curve + ')' : ''
@@ -27,16 +28,16 @@
             </div>
             <!-- 彩灯 -->
             <div class="lamp">
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
-                <div class="light"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
+                <div class="light" :class="isRevolve ? (isFinish ? 'light-active' : 'light-default') : ''"></div>
             </div>
         </div>
     </div>
@@ -74,6 +75,7 @@ export default {
     data() {
         return {
             isRevolve: false, // 点击抽奖
+            isFinish: false, // 抽奖完成
             rotate: 0
         };
     },
@@ -185,7 +187,13 @@ export default {
                         this.isRevolve = false;
                         this.rotate = 0;
                     });
-                }, this.duration * 1000 + 1000);
+
+                    this.isFinish = false; /* 关闭高频彩灯 */
+                }, this.duration * 1000 + 1500);
+
+                setTimeout(() => {
+                    this.isFinish = true; /* 开启高频彩灯 */
+                }, this.duration * 1000);
             }
         }
     }
@@ -322,6 +330,18 @@ export default {
                 top: 0.1rem;
                 left: 1.45rem;
                 transform-origin: 0.05rem 1.4rem;
+                // animation: twinkling 1s 3s, twinkling 100ms 3s 3; /* 名称 持续时间 (延迟时间) 执行次数 */
+            }
+            .light-default {
+                animation: twinkling 1s infinite;
+            }
+            .light-active {
+                animation: twinkling 150ms infinite;
+            }
+            @keyframes twinkling { /* 动画持续时间的百分比 */
+                50% {
+                    background: transparent;
+                }
             }
             .light:nth-child(2n) {
                 background-color: #fafce7;
