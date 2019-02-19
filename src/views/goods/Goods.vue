@@ -103,13 +103,14 @@
                 @click="getLike"
             />
             <van-goods-action-mini-btn
+                info="1"
                 icon="cart-o"
                 text="购物车"
                 @click="getCart"
             />
             <van-goods-action-big-btn
                 text="加入购物车"
-                @click="getGoods"
+                @click="getSku"
             />
         </van-goods-action>
         <!-- 商品规格 -->
@@ -163,9 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="add-cart">
-                    加入购物车
-                </div>
+                <div class="add-cart">确定</div>
             </van-popup>
         </div>
     </div>
@@ -251,11 +250,6 @@ export default {
         // 进入购物车
         getCart() {
             this.$router.push('/cart');
-        },
-
-        // 添加购物车
-        getGoods() {
-            console.log('添加购物车');
         }
     }
 };
@@ -407,15 +401,19 @@ export default {
     /deep/ .van-goods-action {
         .van-goods-action-mini-btn {
             min-width: 20%;
-            height: 0.45rem;
+            height: 0.5rem;
             font-size: 0.14rem;
             .van-goods-action-mini-btn__icon {
                 font-size: 0.18rem;
+                .van-info {
+                    top: -0.03rem;
+                    right: -0.05rem;
+                }
             }
         }
         .van-button--large {
-            height: 0.45rem;
-            line-height: 0.45rem;
+            height: 0.5rem;
+            line-height: 0.5rem;
             background-color: #ff6700;
         }
     }
@@ -471,7 +469,7 @@ export default {
                 }
                 .content {
                     height: 100%;
-                    padding: 1.3rem 0.15rem 0.42rem;
+                    padding: 1.3rem 0.15rem 0.5rem;
                     overflow: auto;
                     .parameter {
                         padding: 0.1rem 0 0.1rem;
@@ -520,9 +518,9 @@ export default {
                 bottom: 0;
 
                 width: 100%;
-                height: 0.42rem;
+                height: 0.5rem;
                 text-align: center;
-                line-height: 0.42rem;
+                line-height: 0.5rem;
                 font-size: 0.16rem;
                 background-color: #ff6700;
                 color: #fff;
