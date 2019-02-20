@@ -7,6 +7,7 @@
 <!-- 首页-热卖 -->
 <template>
     <div class="home-hot">
+        <!-- 下拉刷新 -->
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
             <!-- 轮播图 -->
             <div class="banner">

@@ -7,7 +7,7 @@
 <!-- 底部标签栏 -->
 <template>
     <div class='tabbar'>
-        <van-tabbar v-model="active" active-color="#ff6700">
+        <van-tabbar v-model="active" active-color="#ff6700" z-index="999">
             <!-- 注: router-link 文本改变颜色需要设置, 所以用下面方法 -->
             <!-- <van-tabbar-item icon="home-o">
                 <router-link to="/home">首页</router-link>

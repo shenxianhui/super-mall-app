@@ -16,6 +16,7 @@
             :rightBtn="rightBtn"
             @handleIcon="handleIcon">
         </Header>
+        <!-- 下拉刷新 -->
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
             <div class="user">
                 <div class="user-info">

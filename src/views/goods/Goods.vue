@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="add-cart">确定</div>
+                <div class="add-cart" @click="addCart()">确定</div>
             </van-popup>
         </div>
     </div>
@@ -245,6 +245,12 @@ export default {
                 this.colorIndex = index;
             }
             console.log(value);
+        },
+
+        // 商品规格-确定
+        addCart() {
+            this.$toast.success('添加成功');
+            this.isSku = false;
         },
 
         // 进入购物车
