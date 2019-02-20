@@ -57,7 +57,10 @@
             :price="3050"
             button-text="结算"
             @submit="onSubmit">
-            <van-checkbox checked-color="#ff6700" v-model="checkedAll" @change="setCheckedAll()">全选</van-checkbox>
+            <div class="checked-all" @click="setCheckedAll()">
+                <van-icon :class="checkedAll ? 'active' : ''" name="success" />
+                <span>全选</span>
+            </div>
         </van-submit-bar>
     </div>
 </template>
@@ -139,6 +142,7 @@ export default {
 
         // 全选
         setCheckedAll() {
+            this.checkedAll = !this.checkedAll;
             if (this.checkedAll) {
                 this.goodsList.forEach(item => {
                     item.select = true;
@@ -293,8 +297,24 @@ export default {
         bottom: 0.5rem;
         .van-submit-bar__bar {
             height: 0.5rem;
-            .van-checkbox {
-                margin-left: 0.2rem;
+            .checked-all {
+                display: flex;
+                align-items: center;
+                .van-icon {
+                    display: inline-block;
+
+                    width: 0.25rem;
+                    height: 0.25rem;
+                    text-align: center;
+                    line-height: 0.28rem;
+                    margin: 0 0.1rem;
+                    border: 1px solid #ddd;
+                    border-radius: 50%;
+                    color: #fff;
+                }
+                .active {
+                    background-color: #ff6700;
+                }
             }
             .van-button {
                 height: 0.5rem;
