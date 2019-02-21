@@ -19,6 +19,9 @@
         <div class="goods-content">
             <!-- 轮播图 -->
             <van-swipe :autoplay="5000" indicator-color="white">
+                <!-- <van-swipe-item>
+                    <img :src="setImg()" alt="商品">
+                </van-swipe-item> -->
                 <van-swipe-item>
                     <img src="@/images/common/mi_phone_1.png" alt="商品">
                 </van-swipe-item>
@@ -198,7 +201,7 @@ export default {
                         value: '8128'
                     },
                     {
-                        label: '6GB+128GB',
+                        label: '6GB+256GB',
                         value: '6128'
                     }
                 ]
@@ -256,6 +259,11 @@ export default {
         // 进入购物车
         getCart() {
             this.$router.push('/cart');
+        },
+
+        // 设置图片地址
+        setImg(v) {
+            return require('../../' + v);
         }
     }
 };

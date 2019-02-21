@@ -28,12 +28,12 @@
         <!-- 右侧商品区 -->
         <div class="goods">
             <div class="goods-list" ref="goodsList">
-                <div class="goods-details" v-for="item in dataList" :key="item.id" @click="getDetails()">
+                <div class="goods-details" v-for="item in dataList" :key="item.id" @click="getDetails(item)">
                     <img :src="setImg(item.imgSrc)" alt="商品">
                     <div class="goods-info">
                         <h3>【{{ item.label }}】{{ item.name }}</h3>
-                        <p>{{ item.info }}</p>
-                        <span>￥{{ item.price }}</span>
+                        <p>{{ item.specifications }}</p>
+                        <span>￥{{ item.currentPrice }}</span>
                         <van-icon name="shopping-cart" />
                     </div>
                 </div>
@@ -62,10 +62,12 @@ export default {
             },
             dataList: [ // 商品列表
                 {
+                    select: true,
                     label: '热卖',
                     name: '小米手机',
-                    info: '超高性价比, 你值得拥有',
-                    price: '2999',
+                    specifications: '超高性价比, 你值得拥有',
+                    currentPrice: 2999,
+                    costPrice: 3299,
                     imgSrc: 'images/common/mi_phone_6.png'
                 }
             ]
@@ -91,15 +93,17 @@ export default {
             for (let i = 0; i < randomNum; i++) {
                 phoneNum = Math.round(Math.random() * 7 + 1);
                 let goods = {
+                    select: true,
                     label: '热卖',
                     name: '小米手机',
-                    info: '超高性价比, 你值得拥有',
-                    price: '',
+                    specifications: '超高性价比, 你值得拥有',
+                    currentPrice: 2999,
+                    costPrice: 3299,
                     imgSrc: 'images/common/mi_phone_' + phoneNum + '.png'
                 }
                 let price = Math.round(Math.random() * 4000) + 1000;
 
-                goods.price = price;
+                goods.currentPrice = price;
                 this.dataList.push(goods);
             }
 
@@ -136,7 +140,8 @@ export default {
         },
 
         // 获取商品详情
-        getDetails() {
+        getDetails(data) {
+            console.log(data);
             this.$router.push('/goods');
         }
     }

@@ -18,8 +18,8 @@
                         <img :src="item.imgSrc" alt="商品">
                     </div>
                     <p class="goods-name">{{ item.name || '-' }}</p>
-                    <p class="goods-details">{{ item.details || '-' }}</p>
-                    <span>{{ item.price || '-' }}元</span>
+                    <p class="goods-details">{{ item.specifications || '-' }}</p>
+                    <span>{{ item.currentPrice || '-' }}元</span>
                 </div>
             </div>
         </van-list>
@@ -42,14 +42,7 @@ export default {
             finished: false, // 加载完成
             homeMore: 'homeMore',
 
-            dataList: [ // 数据列表
-                // {
-                //     name: '小米8',
-                //     details: '潮流镜面渐变色，2400万自拍旗舰',
-                //     price: '1299',
-                //     imgSrc: require('@/images/common/mi_phone_1.png')
-                // }
-            ],
+            dataList: [], // 数据列表
             scrollParam: { // 回到顶部参数
                 way: 1,
                 distance: 20,
@@ -68,19 +61,22 @@ export default {
             setTimeout(() => {
                 for (let i = 0; i < 20; i++) {
                     let obj = {
+                        select: true,
+                        label: '热卖',
                         name: '',
-                        details: '',
-                        price: '',
+                        specifications: '',
+                        currentPrice: 0,
+                        costPrice: 999,
                         imgSrc: ''
                     };
-                    let word = ['丽', '民', '鹏', '艳', '刚', '婵', '征', '慧', '磊'];
+                    let word = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
                     
                     obj.name = '小米' + Math.round(Math.random() * 9); // 1-9随机数
                     for (let i = 0; i < 8; i++) {
                         let num = Math.round(Math.random() * 8);
-                        obj.details += word[num];
+                        obj.specifications += word[num];
                     }
-                    obj.price = Math.round(Math.random() * 9999);
+                    obj.currentPrice = Math.round(Math.random() * 9999);
                     obj.imgSrc = require('@/images/common/mi_phone_' + Math.round(Math.random() * 7 + 1) + '.png');
                     this.dataList.push(obj);
                 }

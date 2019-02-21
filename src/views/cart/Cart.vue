@@ -36,16 +36,18 @@
                     <div class="goods-card" v-for="item in goodsList" :key="item.id">
                         <van-checkbox checked-color="#ff6700" v-model="item.select" @change="setCheckedSingle()"></van-checkbox>
                         <div class="goods-details">
-                            <img :src="item.imgSrc" alt="商品">
-                            <div class="goods-info">
-                                <h4>{{ item.name }}</h4>
-                                <p>{{ item.specifications }}</p>
-                                <div class="price">
-                                    <span>￥{{ item.currentPrice }}</span>
-                                    <del>￥{{ item.costPrice }}</del>
+                            <div class="wrap" @click="getDetails(item)">
+                                <img :src="setImg(item.imgSrc)" alt="商品">
+                                <div class="goods-info">
+                                    <h4>{{ item.name }}</h4>
+                                    <p>{{ item.specifications }}</p>
+                                    <div class="price">
+                                        <span>￥{{ item.currentPrice }}</span>
+                                        <del>￥{{ item.costPrice }}</del>
+                                    </div>
                                 </div>
-                                <van-stepper v-model="item.quantity" :disable-input="true" />
                             </div>
+                            <van-stepper v-model="item.quantity" :disable-input="true" />
                         </div>
                     </div>
                 </div>
@@ -92,20 +94,22 @@ export default {
             goodsList: [ // 商品列表
                 {
                     select: true,
-                    imgSrc: require('@/images/common/cart.png'),
+                    label: '热卖',
                     name: '小米8 屏幕指纹版 8GB内存',
                     specifications: '透明 128GB',
                     currentPrice: 3399,
                     costPrice: 3599,
+                    imgSrc: 'images/common/cart.png',
                     quantity: 1
                 },
                 {
                     select: true,
-                    imgSrc: require('@/images/common/cart.png'),
+                    label: '热卖',
                     name: '小米7 屏幕指纹版 8GB内存',
                     specifications: '透明 128GB',
                     currentPrice: 4399,
                     costPrice: 4599,
+                    imgSrc: 'images/common/cart.png',
                     quantity: 2
                 }
             ]
@@ -173,12 +177,24 @@ export default {
             }, 500);
         },
 
+        // 设置图片地址
+        setImg(v) {
+            return require('../../' + v);
+        },
+
         // 结算
         onSubmit() {
             this.isSubLoading = true;
             setTimeout(() => {
                 this.isSubLoading = false;
-            }, 1000)
+                this.$toast.success('购买成功');
+            }, 2000)
+        },
+
+        // 获取商品详情
+        getDetails(data) {
+            console.log(data);
+            this.$router.push('/goods');
         }
     }
 };
@@ -233,7 +249,7 @@ export default {
             top: 0.7rem;
 
             width: 100%;
-            padding: 0 0.1rem;
+            padding: 0 0.1rem 0.5rem;
             .goods-card {
                 display: flex;
 
@@ -241,9 +257,7 @@ export default {
                 padding: 0.1rem;
                 border-radius: 0.08rem;
                 background-color: #fff;
-                &:not(:last-child) {
-                    margin-bottom: 0.1rem;
-                }
+                margin-bottom: 0.1rem;
                 /* 复选框 */
                 /deep/ .van-checkbox {
                     width: 0.25rem;
@@ -252,51 +266,56 @@ export default {
                 }
                 .goods-details {
                     display: flex;
+                    flex-direction: column;
 
                     width: 100%;
                     padding-left: 0.1rem;
-                    img {
-                        width: 0.8rem;
-                        height: 0.8rem;
-                        border: 1px solid #eee;
-                        border-radius: 0.02rem;
-                    }
-                    .goods-info {
-                        width: 100%;
-                        padding: 0.05rem 0.1rem;
-                        h4 {
-                            font-size: 0.14rem;
-                            font-weight: normal;
+                    .wrap {
+                        display: flex;
+                        img {
+                            width: 0.8rem;
+                            height: 0.8rem;
+                            border: 1px solid #eee;
+                            border-radius: 0.02rem;
                         }
-                        p {
-                            font-size: 0.12rem;
-                            color: #999;
-                            margin-top: 0.05rem;
-                        }
-                        .price {
-                            margin-top: 0.05rem;
-                            span {
-                                font-size: 0.17rem;
-                                color: #ff6700;
-                            }
-                            del {
+                        .goods-info {
+                            width: 100%;
+                            padding: 0.05rem 0.1rem;
+                            h4 {
                                 font-size: 0.14rem;
-                                color: #666;
+                                font-weight: normal;
+                            }
+                            p {
+                                font-size: 0.12rem;
+                                color: #999;
+                                margin-top: 0.05rem;
+                            }
+                            .price {
+                                margin-top: 0.05rem;
+                                span {
+                                    font-size: 0.17rem;
+                                    color: #ff6700;
+                                }
+                                del {
+                                    font-size: 0.14rem;
+                                    color: #666;
+                                }
                             }
                         }
-                        /deep/ .van-stepper {
-                            float: right;
-                            margin-top: 0.05rem;
-                            button {
-                                width: 0.3rem;
-                                height: 0.3rem;
-                                padding: 0;
-                            }
-                            input {
-                                width: 0.3rem;
-                                height: 0.28rem;
-                                padding: 0;
-                            }
+                    }
+                    /deep/ .van-stepper {
+                        display: flex;
+                        justify-content: flex-end;
+                        margin-top: 0.05rem;
+                        button {
+                            width: 0.3rem;
+                            height: 0.3rem;
+                            padding: 0;
+                        }
+                        input {
+                            width: 0.3rem;
+                            height: 0.28rem;
+                            padding: 0;
                         }
                     }
                 }

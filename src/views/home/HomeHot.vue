@@ -12,50 +12,50 @@
             <!-- 轮播图 -->
             <div class="banner">
                 <van-swipe :autoplay="4000" indicator-color="white">
-                    <van-swipe-item v-for="item in banners" :key="item.num">
-                        <img :src="item.src" alt="轮播图">
+                    <van-swipe-item v-for="item in banners" :key="item.id">
+                        <img :src="setImg(item.imgSrc)" alt="轮播图" @click="getDetails(item)">
                     </van-swipe-item>
                 </van-swipe>
             </div>
             <!-- 商品分类 -->
             <div class="tabs">
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_1.png" alt="icon">
                     <p>热卖商品</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_2.png" alt="icon">
                     <p>小米闪购</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_3.png" alt="icon">
                     <p>以旧换新</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_4.png" alt="icon">
                     <p>1分拼团</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_5.png" alt="icon">
                     <p>超值特卖</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_6.png" alt="icon">
                     <p>真心想要</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_7.png" alt="icon">
                     <p>每日甄选</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_8.png" alt="icon">
                     <p>电视特卖</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_9.png" alt="icon">
                     <p>游戏配件</p>
                 </div>
-                <div class="tab">
+                <div class="tab" @click="getList()">
                     <img src="@/images/common/tab_10.png" alt="icon">
                     <p>更多商品</p>
                 </div>
@@ -92,16 +92,29 @@ export default {
 
             banners: [ // 轮播图
                 {
-                    num: 1,
-                    src: require('@/images/common/banner_1.png')
+                    select: true,
+                    label: '热卖',
+                    name: '小米8 青春版',
+                    specifications: '潮流镜面渐变色, 2400万像素',
+                    currentPrice: 1399,
+                    costPrice: 1599,
+                    imgSrc: 'images/common/banner_1.png'
                 },
                 {
-                    num: 2,
-                    src: require('@/images/common/banner_2.png')
+                    label: '热卖',
+                    name: '红米6 AI双摄',
+                    specifications: '小屏高性能',
+                    currentPrice: 899,
+                    costPrice: 999,
+                    imgSrc: 'images/common/banner_2.png'
                 },
                 {
-                    num: 3,
-                    src: require('@/images/common/banner_3.png')
+                    label: '热卖',
+                    name: '小米手环3 NFC版',
+                    specifications: '能刷公交车、地铁',
+                    currentPrice: 199,
+                    costPrice: 299,
+                    imgSrc: 'images/common/banner_3.png'
                 }
             ]
         };
@@ -116,6 +129,22 @@ export default {
                 this.$toast('刷新成功');
                 this.isLoading = false;
             }, 500);
+        },
+
+        // 商品列表导航
+        getList() {
+            this.$router.push('/categories');
+        },
+
+        // 获取商品详情
+        getDetails(data) {
+            console.log(data);
+            this.$router.push('/goods');
+        },
+
+        // 设置图片地址
+        setImg(v) {
+            return require('../../' + v);
         }
     }
 };
