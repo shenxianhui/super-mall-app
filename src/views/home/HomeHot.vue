@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 17:54:56 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-02-05 10:08:57
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-21 16:54:15
  */
 <!-- 首页-热卖 -->
 <template>
@@ -82,6 +82,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
     name: 'HomeHot',
     components: {},
@@ -101,6 +103,7 @@ export default {
                     imgSrc: 'images/common/banner_1.png'
                 },
                 {
+                    select: true,
                     label: '热卖',
                     name: '红米6 AI双摄',
                     specifications: '小屏高性能',
@@ -109,6 +112,7 @@ export default {
                     imgSrc: 'images/common/banner_2.png'
                 },
                 {
+                    select: true,
                     label: '热卖',
                     name: '小米手环3 NFC版',
                     specifications: '能刷公交车、地铁',
@@ -123,6 +127,10 @@ export default {
     watch: {},
     created() {},
     methods: {
+        ...mapMutations([
+            'setGoods' // 商品信息
+        ]),
+
         // 下拉刷新
         onRefresh() {
             setTimeout(() => {
@@ -138,7 +146,7 @@ export default {
 
         // 获取商品详情
         getDetails(data) {
-            console.log(data);
+            this.setGoods(data);
             this.$router.push('/goods');
         },
 

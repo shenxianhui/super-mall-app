@@ -1,8 +1,8 @@
 /*
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:17:47 
- * @Last Modified by: Shen Xianhui
- * @Last Modified time: 2019-02-07 10:00:36
+ * @Last Modified by: ShenXianhui
+ * @Last Modified time: 2019-02-21 16:54:06
  */
 <!-- 购物车 -->
 <template>
@@ -69,6 +69,7 @@
 
 <script>
 import Header from '@/components/Header';
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'Cart',
@@ -130,6 +131,10 @@ export default {
     watch: {},
     created() {},
     methods: {
+        ...mapMutations([
+            'setGoods' // 商品信息
+        ]),
+
         // 右侧按钮
         handleIcon(obj) {
             if (obj.index === 0) {
@@ -193,7 +198,7 @@ export default {
 
         // 获取商品详情
         getDetails(data) {
-            console.log(data);
+            this.setGoods(data);
             this.$router.push('/goods');
         }
     }

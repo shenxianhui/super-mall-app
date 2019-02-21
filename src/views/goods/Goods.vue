@@ -2,7 +2,7 @@
  * @Author: ShenXianhui 
  * @Date: 2019-02-15 14:40:03 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-02-19 16:59:56
+ * @Last Modified time: 2019-02-21 17:30:45
  */
 <!-- 商品详情 -->
 <template>
@@ -18,10 +18,10 @@
         <!-- 内容 -->
         <div class="goods-content">
             <!-- 轮播图 -->
-            <van-swipe :autoplay="5000" indicator-color="white">
-                <!-- <van-swipe-item>
-                    <img :src="setImg()" alt="商品">
-                </van-swipe-item> -->
+            <van-swipe :autoplay="8000" indicator-color="white">
+                <van-swipe-item>
+                    <img :src="setImg(goodsData.imgSrc)" alt="商品">
+                </van-swipe-item>
                 <van-swipe-item>
                     <img src="@/images/common/mi_phone_1.png" alt="商品">
                 </van-swipe-item>
@@ -34,9 +34,12 @@
             </van-swipe>
             <div class="goods-details">
                 <div class="goods-trait">
-                    <h2>小米8 屏幕指纹版</h2>
-                    <p>全球首款 压感屏幕指纹 / 双频GPS超精准定位 / 支持红外人脸识别 / 骁龙845旗舰处理器</p>
-                    <span>￥3399 <del>￥3599</del></span>
+                    <h2>{{ this.goodsData.name }}</h2>
+                    <p>{{ this.goodsData.specifications }}</p>
+                    <span>
+                        ￥{{ this.goodsData.currentPrice }}
+                        <del>￥{{ this.goodsData.costPrice }}</del>
+                    </span>
                 </div>
                 <div class="goods-parameter">
                     <div class="merit">
@@ -103,17 +106,17 @@
             <van-goods-action-mini-btn
                 icon="like-o"
                 text="喜欢"
-                @click="getLike"
+                @click="getLike()"
             />
             <van-goods-action-mini-btn
                 info="1"
                 icon="cart-o"
                 text="购物车"
-                @click="getCart"
+                @click="getCart()"
             />
             <van-goods-action-big-btn
                 text="加入购物车"
-                @click="getSku"
+                @click="getSku()"
             />
         </van-goods-action>
         <!-- 商品规格 -->
@@ -124,13 +127,13 @@
                 :overlay="true">
                 <div class="container">
                     <div class="sku-details">
-                        <img :src="imgSrc" alt="商品">
+                        <img :src="setImg(goodsData.imgSrc)" alt="商品">
                         <div class="title">
                             <div class="price">
-                                <span>￥3399</span>
-                                <del>￥3599</del>
+                                <span>￥{{ this.goodsData.currentPrice }}</span>
+                                <del>￥{{ this.goodsData.costPrice }}</del>
                             </div>
-                            <p>小米8 屏幕指纹版 8GB+128GB 透明</p>
+                            <p>{{ this.goodsData.name }} {{ this.goodsData.specifications }}</p>
                         </div>
                     </div>
                     <div class="content">
@@ -147,11 +150,11 @@
                             </div>
                         </div>
                         <div class="parameter">
-                            <h4>{{ color.title }}</h4>
+                            <h4>{{ colors.title }}</h4>
                             <div class="parameter-select">
                                 <span
                                     :class="colorIndex === index ? 'active' : ''"
-                                    v-for="(item, index) in color.option"
+                                    v-for="(item, index) in colors.option"
                                     :key="item.id"
                                     @click="getParameter(item.value, index, 'color')">
                                     {{ item.label }}
@@ -175,6 +178,7 @@
 
 <script>
 import Header from '@/components/Header';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     name: 'goods',
@@ -186,51 +190,64 @@ export default {
         return {
             placeholder: '请输入内容', // 搜索框提示
             isSku: false, // 商品规格弹出框
-            imgSrc: require('@/images/common/mi_phone_1.png'), // 商品规格-顶部图片
             stepperNum: 1, // 当前输入值
             isInteger: true, // 是否只允许输入整数
             isDisable: true, // 是否禁用输入框
             specificationsIndex: 0, // 商品规格-参数索引
             colorIndex: 0, // 商品规格-颜色索引
+            selectSpecifications: '', // 选择-商品参数
+            selectColor: '', // 选择-商品颜色
 
+            goodsData: {}, // 商品数据
             specifications: { // 商品规格-规格
                 title: '规格',
                 option: [
                     {
                         label: '8GB+128GB',
-                        value: '8128'
+                        value: '8GB+128GB'
                     },
                     {
                         label: '6GB+256GB',
-                        value: '6128'
+                        value: '6GB+256G'
                     }
                 ]
             },
-            color: { // 商品规格-颜色
+            colors: { // 商品规格-颜色
                 title: '颜色',
                 option: [
                     {
                         label: '红色',
-                        value: 'red'
+                        value: '红色'
                     },
                     {
                         label: '黑色',
-                        value: 'black'
+                        value: '黑色'
                     }
                 ]
             }
         };
     },
-    computed: {},
+    computed: {
+        ...mapState([
+            'goods' // 商品信息
+        ])
+    },
     watch: {},
-    created() {},
+    created() {
+        console.log(this.goods);
+        this.goodsData = this.goods;
+    },
     methods: {
+        ...mapMutations([
+            'setGoodsList' // 商品列表
+        ]),
+
         // 喜欢此商品
         getLike() {
             console.log('喜欢');
         },
 
-        // 商品规格选择
+        // 加入购物车 (商品规格选择)
         getSku() {
             this.isSku = true;
         },
@@ -244,14 +261,20 @@ export default {
         getParameter(value, index, type) {
             if (type === 'specifications') {
                 this.specificationsIndex = index;
+                this.selectSpecifications = value;
             } else {
                 this.colorIndex = index;
+                this.selectColor = value;
             }
-            console.log(value);
         },
 
-        // 商品规格-确定
+        // 商品规格-确定 (加入购物车)
         addCart() {
+            this.selectSpecifications = this.specifications.option[0].value;
+            this.selectColor = this.colors.option[0].value;
+            this.goodsData.specifications = this.selectSpecifications;
+            this.goodsData.colors = this.selectColor;
+            this.setGoodsList(this.goodsData);
             this.$toast.success('添加成功');
             this.isSku = false;
         },

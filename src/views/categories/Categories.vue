@@ -2,7 +2,7 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:16:12 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-02-15 14:54:19
+ * @Last Modified time: 2019-02-21 16:54:12
  */
 <!-- 分类 -->
 <template>
@@ -44,6 +44,7 @@
 
 <script>
 import Header from '@/components/Header';
+import { mapMutations } from 'vuex';
 
 export default {
     name: 'Categories',
@@ -77,6 +78,10 @@ export default {
     watch: {},
     created() {},
     methods: {
+        ...mapMutations([
+            'setGoods' // 商品信息
+        ]),
+
         // 右侧按钮
         handleIcon() {
             console.log('消息中心');
@@ -141,7 +146,7 @@ export default {
 
         // 获取商品详情
         getDetails(data) {
-            console.log(data);
+            this.setGoods(data);
             this.$router.push('/goods');
         }
     }
