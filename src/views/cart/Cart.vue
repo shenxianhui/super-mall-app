@@ -54,7 +54,7 @@
         <!-- 提交订单栏 -->
         <van-submit-bar
             :loading="isSubLoading"
-            :price="3050"
+            :price="total"
             button-text="结算"
             @submit="onSubmit">
             <div class="checked-all" @click="setCheckedAll()">
@@ -95,8 +95,8 @@ export default {
                     imgSrc: require('@/images/common/cart.png'),
                     name: '小米8 屏幕指纹版 8GB内存',
                     specifications: '透明 128GB',
-                    currentPrice: '3399',
-                    costPrice: '3599',
+                    currentPrice: 3399,
+                    costPrice: 3599,
                     quantity: 1
                 },
                 {
@@ -104,14 +104,25 @@ export default {
                     imgSrc: require('@/images/common/cart.png'),
                     name: '小米7 屏幕指纹版 8GB内存',
                     specifications: '透明 128GB',
-                    currentPrice: '4399',
-                    costPrice: '4599',
+                    currentPrice: 4399,
+                    costPrice: 4599,
                     quantity: 2
                 }
             ]
         };
     },
-    computed: {},
+    computed: {
+        // 总价
+        total() {
+            let sum = 0;
+            this.goodsList.forEach(item => {
+                if (item.select) {
+                    sum += +item.currentPrice * item.quantity;
+                }
+            });
+            return sum * 100;
+        }
+    },
     watch: {},
     created() {},
     methods: {
@@ -167,7 +178,7 @@ export default {
             this.isSubLoading = true;
             setTimeout(() => {
                 this.isSubLoading = false;
-            }, 2000)
+            }, 1000)
         }
     }
 };
