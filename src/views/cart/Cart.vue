@@ -2,7 +2,7 @@
  * @Author: Shen Xianhui 
  * @Date: 2019-01-27 09:17:47 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-02-21 16:54:06
+ * @Last Modified time: 2019-02-22 10:35:32
  */
 <!-- 购物车 -->
 <template>
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <van-stepper v-model="item.quantity" :disable-input="true" />
+                            <van-stepper v-model="item.number" :disable-input="true" />
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
 
 <script>
 import Header from '@/components/Header';
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     name: 'Cart',
@@ -93,43 +93,49 @@ export default {
                 ]
             },
             goodsList: [ // 商品列表
-                {
-                    select: true,
-                    label: '热卖',
-                    name: '小米8 屏幕指纹版 8GB内存',
-                    specifications: '透明 128GB',
-                    currentPrice: 3399,
-                    costPrice: 3599,
-                    imgSrc: 'images/common/cart.png',
-                    quantity: 1
-                },
-                {
-                    select: true,
-                    label: '热卖',
-                    name: '小米7 屏幕指纹版 8GB内存',
-                    specifications: '透明 128GB',
-                    currentPrice: 4399,
-                    costPrice: 4599,
-                    imgSrc: 'images/common/cart.png',
-                    quantity: 2
-                }
+                // {
+                //     select: true,
+                //     label: '热卖',
+                //     name: '小米8 屏幕指纹版 8GB内存',
+                //     specifications: '透明 128GB',
+                //     currentPrice: 3399,
+                //     costPrice: 3599,
+                //     imgSrc: 'images/common/cart.png',
+                //     quantity: 1
+                // },
+                // {
+                //     select: true,
+                //     label: '热卖',
+                //     name: '小米7 屏幕指纹版 8GB内存',
+                //     specifications: '透明 128GB',
+                //     currentPrice: 4399,
+                //     costPrice: 4599,
+                //     imgSrc: 'images/common/cart.png',
+                //     quantity: 2
+                // }
             ]
         };
     },
     computed: {
+        ...mapState({
+            stateGoodsList: 'goodsList' // 商品列表
+        }),
+
         // 总价
         total() {
             let sum = 0;
             this.goodsList.forEach(item => {
                 if (item.select) {
-                    sum += +item.currentPrice * item.quantity;
+                    sum += +item.currentPrice * item.number;
                 }
             });
             return sum * 100;
         }
     },
     watch: {},
-    created() {},
+    created() {
+        this.goodsList = this.stateGoodsList;
+    },
     methods: {
         ...mapMutations([
             'setGoods' // 商品信息

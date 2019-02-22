@@ -2,7 +2,7 @@
  * @Author: ShenXianhui 
  * @Date: 2019-02-15 14:40:03 
  * @Last Modified by: ShenXianhui
- * @Last Modified time: 2019-02-21 17:30:45
+ * @Last Modified time: 2019-02-22 10:33:56
  */
 <!-- 商品详情 -->
 <template>
@@ -109,7 +109,7 @@
                 @click="getLike()"
             />
             <van-goods-action-mini-btn
-                info="1"
+                :info="cartNum"
                 icon="cart-o"
                 text="购物车"
                 @click="getCart()"
@@ -229,13 +229,24 @@ export default {
     },
     computed: {
         ...mapState([
-            'goods' // 商品信息
-        ])
+            'goods', // 商品信息
+            'goodsList'
+        ]),
+
+        // 购物车图标数字
+        cartNum() {
+            if (!this.goodsList.length) {
+                return '';
+            } else {
+                return this.goodsList.length;
+            }
+        }
     },
     watch: {},
     created() {
-        console.log(this.goods);
         this.goodsData = this.goods;
+        this.selectSpecifications = this.specifications.option[0].value;
+        this.selectColor = this.colors.option[0].value;
     },
     methods: {
         ...mapMutations([
@@ -270,11 +281,12 @@ export default {
 
         // 商品规格-确定 (加入购物车)
         addCart() {
-            this.selectSpecifications = this.specifications.option[0].value;
-            this.selectColor = this.colors.option[0].value;
-            this.goodsData.specifications = this.selectSpecifications;
-            this.goodsData.colors = this.selectColor;
-            this.setGoodsList(this.goodsData);
+            let _obj = Object.assign({}, this.goodsData); // 对象拷贝, 解决数组push对象产生的覆盖问题
+
+            _obj.specifications = this.selectSpecifications;
+            _obj.color = this.selectColor;
+            _obj.number = this.stepperNum;
+            this.setGoodsList(_obj);
             this.$toast.success('添加成功');
             this.isSku = false;
         },
